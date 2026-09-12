@@ -31,7 +31,7 @@ sealed class TrayContext : ApplicationContext
 
     public TrayContext()
     {
-        _icon = new NotifyIcon { Icon = SystemIcons.Application, Visible = true, Text = Program.Name };
+        _icon = new NotifyIcon { Icon = LoadTrayIcon(), Visible = true, Text = Program.Name };
 
         var menu = new ContextMenuStrip();
         foreach (var binding in Hotkeys.All)
@@ -45,6 +45,14 @@ sealed class TrayContext : ApplicationContext
 
     void Warn(string message) =>
         _icon.ShowBalloonTip(4000, Program.Name, message, ToolTipIcon.Warning);
+
+    static Icon LoadTrayIcon()
+    {
+        using var stream = typeof(TrayContext).Assembly.GetManifestResourceStream("app.ico");
+        if (stream is null) return SystemIcons.Application;
+        var size = SystemInformation.SmallIconSize; // DPI-aware 16/20/24/32 px
+        return new Icon(stream, size.Width, size.Height);
+    }
 
     protected override void ExitThreadCore()
     {

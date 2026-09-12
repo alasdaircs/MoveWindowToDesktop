@@ -13,7 +13,13 @@
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>false</SelfContained>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <ApplicationIcon>app.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Same icon for the tray; embedded so the exe stays single-file -->
+    <EmbeddedResource Include="app.ico" LogicalName="app.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <!-- https://github.com/Ciantic/VirtualDesktopAccessor (MIT). Update this file when a new Windows build breaks it. -->
